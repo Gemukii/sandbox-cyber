@@ -1,0 +1,38 @@
+schemaVersion: "2"
+kind: sandbox
+
+name: secure-agent-sandbox
+displayName: Secure Agent Sandbox
+description: Mountless Docker Sandbox for testing untrusted files and agents
+
+sandbox:
+  provider: docker-sandbox
+  minimumSbxVersion: "0.42.0"
+  workspace: mountless
+  importDirectory: /sas/incoming
+  exportDirectory: /sas/outgoing
+
+agentInstructions:
+  filename: AGENTS.md
+
+permissions:
+  network:
+    default: locked-down
+    allow: []
+  filesystem:
+    hostWorkspace: false
+    explicitImport: true
+    explicitExport: true
+  integrations:
+    localMcp: false
+    hostCredentials: false
+    publishedPorts: false
+    sharedSkills: false
+
+resources:
+  timeoutSeconds: 900
+  maxExportBytes: 104857600
+
+environment:
+  variables:
+    PYTHONUNBUFFERED: "1"
